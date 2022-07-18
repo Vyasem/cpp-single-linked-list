@@ -227,7 +227,7 @@ bool operator==(const SingleLinkedList<Type>& lhs, const SingleLinkedList<Type>&
 
 template <typename Type>
 bool operator!=(const SingleLinkedList<Type>& lhs, const SingleLinkedList<Type>& rhs) {
-    if(std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end())){
+    if(lhs == rhs){
     	return false;
     }
     return true;
@@ -240,7 +240,7 @@ bool operator<(const SingleLinkedList<Type>& lhs, const SingleLinkedList<Type>& 
 
 template <typename Type>
 bool operator<=(const SingleLinkedList<Type>& lhs, const SingleLinkedList<Type>& rhs) {
-    if(std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()) || std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end())){
+    if(lhs < rhs || lhs == rhs){
     	return true;
     }
     return false;
@@ -253,7 +253,7 @@ bool operator>(const SingleLinkedList<Type>& lhs, const SingleLinkedList<Type>& 
 
 template <typename Type>
 bool operator>=(const SingleLinkedList<Type>& lhs, const SingleLinkedList<Type>& rhs) {
-	if(!std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()) || std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end())){
+	if(rhs < lhs || lhs == rhs){
 		return true;
 	}
 	return false;
