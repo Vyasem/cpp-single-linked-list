@@ -124,7 +124,7 @@ public:
 	    SingleLinkedList(std::initializer_list<Type> values) {
 	    	for(auto it = (values.end() - 1); it >= values.begin(); --it){
 	    		PushFront(*it);
-			}
+	    	}
 	    }
 
 		SingleLinkedList(const SingleLinkedList& other) {
