@@ -125,7 +125,7 @@ public:
 	    	for(auto it = (values.end() - 1); it >= values.begin(); --it){
 	    		PushFront(*it);
 			}
-		}
+	    }
 
 		SingleLinkedList(const SingleLinkedList& other) {
 			if(size_ == 0 && head_.next_node == nullptr && other.GetSize() > 0){
