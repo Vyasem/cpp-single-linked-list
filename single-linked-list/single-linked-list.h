@@ -54,19 +54,23 @@ class SingleLinkedList {
         }
 
         BasicIterator& operator++() noexcept {
+        	assert(node_ != nullptr);
         	node_ = node_->next_node;
             return *this;
         }
 
         BasicIterator operator++(int) noexcept {
+        	assert(node_ != nullptr);
         	auto oldThis(*this);
         	++(*this);
         	return oldThis;
         }
         [[nodiscard]] reference operator*() const noexcept {
+        	assert(node_ != nullptr);
         	return node_->value;
         }
         [[nodiscard]] pointer operator->() const noexcept {
+        	assert(node_ != nullptr);
         	return &(node_->value);
         }
     private:
@@ -126,17 +130,17 @@ public:
 		SingleLinkedList(const SingleLinkedList& other) {
 			if(size_ == 0 && head_.next_node == nullptr && other.GetSize() > 0){
 				SingleLinkedList tmp;
-				std::vector<Type> values;
-				values.reserve(other.GetSize());
-				for(const Type& val: other){
-					values.push_back(val);
-				}
-				for(int i = (values.size() - 1); i >= 0; --i){
-					Type newVal = values[i];
-					tmp.PushFront(newVal);
+				ConstIterator pointer = tmp.cbefore_begin();
+				for(const Type& value: other){
+					pointer = tmp.InsertAfter(pointer, value);
 				}
 				swap(tmp);
 			}
+		}
+
+		template<typename T>
+		SingleLinkedList(){
+
 		}
 
 		SingleLinkedList& operator=(const SingleLinkedList& rhs) {
@@ -148,12 +152,9 @@ public:
 		}
 
 		void swap(SingleLinkedList& other) noexcept {
-			Node itemHead = head_;
-			size_t itemSize = size_;
-			head_.next_node = other.head_.next_node;
-			size_ = other.size_;
-			other.head_.next_node = itemHead.next_node;
-			other.size_ = itemSize;
+			std::swap(this->head_.next_node, other.head_.next_node);
+			std::swap(this->size_, other.size_);
+
 		}
 
 	    SingleLinkedList(){
@@ -177,6 +178,7 @@ public:
 		};
 
 		void PopFront() noexcept {
+			assert(size_ != 0);
 			Node * next = head_.next_node->next_node;
 			delete head_.next_node;
 			head_.next_node = next;
@@ -184,6 +186,7 @@ public:
 		}
 
 		Iterator InsertAfter(ConstIterator pos, const Type& value) {
+			assert(pos.node_ != nullptr);
 			Node * newNode = new Node(value, pos.node_->next_node);
 			pos.node_->next_node = newNode;
 			++size_;
@@ -200,6 +203,7 @@ public:
 		}
 
 		Iterator EraseAfter(ConstIterator pos) noexcept {
+			assert(pos.node_ != nullptr);
 			Node * next = pos.node_->next_node->next_node;
 			delete pos.node_->next_node;
 			pos.node_->next_node = next;
